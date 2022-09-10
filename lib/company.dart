@@ -1,5 +1,5 @@
 import 'package:cadastro_de_empresas/address.dart';
-import 'package:cadastro_de_empresas/partner.dart';
+import 'package:cadastro_de_empresas/person.dart';
 
 class Company {
   String uuid;
@@ -9,7 +9,7 @@ class Company {
   Address address;
   String phoneNumber;
   DateTime createdAt;
-  Partner partner;
+  Person partner;
 
   Company(
       this.uuid,
