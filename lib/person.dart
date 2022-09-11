@@ -1,6 +1,6 @@
 import 'package:cadastro_de_empresas/address.dart';
 
-class Person {
+abstract class Person {
   String name;
   String registrationNumber;
   Address address;
