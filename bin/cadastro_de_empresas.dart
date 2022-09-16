@@ -1,54 +1,83 @@
+import 'dart:io';
 import 'package:cadastro_de_empresas/address.dart';
 import 'package:cadastro_de_empresas/company.dart';
-import 'package:cadastro_de_empresas/database.dart';
-import 'package:cadastro_de_empresas/legal_person.dart';
-import 'package:cadastro_de_empresas/natural_person.dart';
+import 'package:cadastro_de_empresas/dataBase.dart';
+import 'package:cadastro_de_empresas/legalPerson.dart';
+import 'package:cadastro_de_empresas/naturalPerson.dart';
 import 'package:uuid/uuid.dart';
 
 void main(List<String> arguments) {
+  Database db = Database();
+
   final ambev = Company(
       Uuid().v1(),
       'AMBEV',
       'AMBEV COMMERCIAL',
-      '16391051000121',
-      Address(
-          'Esmeralda', 120, 'casa', 'Dom Pedro II', 'São Paulo', '12232883'),
-      '12982171717',
-      DateTime.now(),
+      '77777777777777',
+      '12982173707',
+      Address('Esmeralda Ambev', '120', 'casa', 'Dom Pedro II',
+          'São José dos Campos', 'São Paulo', '12232883'),
       LegalPerson(
           'COCA-COLA',
           'COCA-COLA COMMERCIAL',
-          '73923457000141',
-          Address('AMETISTA', 35, '', 'Bosque dos Eucaliptos', 'São Paulo',
-              '12458995'),
-          'J'));
+          '99999999999999',
+          Address('Esmeralda Coca', '120', 'casa', 'Dom Pedro II',
+              'São José dos Campos', 'São Paulo', '12232883'),
+          'L'),
+      DateTime.now());
 
   final magalu = Company(
       Uuid().v1(),
       'MAGALU',
       'MAGALU COMMERCIAL',
-      '31818594000176',
-      Address('street', 170, 'complement', 'neighborhood', 'state', 'zipCode'),
-      'phoneNumber',
-      DateTime.now(),
+      '88888888888888',
+      '12982173707',
+      Address('Esmeralda Ambev', '120', 'casa', 'Dom Pedro II',
+          'São José dos Campos', 'São Paulo', '12232883'),
       NaturalPerson(
-          'TAMIRES',
-          '42142142111',
-          Address(
-              'street', 120, 'complement', 'neighborhood', 'state', 'zipCode'),
-          'F'));
+          'Beatriz',
+          '42142142142',
+          Address('Esmeralda Beatriz', '120', 'casa', 'Dom Pedro II',
+              'São José dos Campos', 'São Paulo', '12232883'),
+          'N'),
+      DateTime.now());
 
-  print(ambev.partner.commercialName);
-  if (magalu.partner.commercialName == null) {
+  int options = 5;
+
+  do {
+    print('1 - To Register a company.'); //add na lista
+    print('2 - To Search registrated company by registration number.');
+    print('3 - To Search registrated company by Partner registration number.');
     print(
-        'A empresa ${magalu.companyName} tem uma pessoa fisíca como sócio portanto não há nome comercial.');
-  }
+        '4 - To List Companies registered in alphabetical order (based on Corporate Trade).'); //print a lista
+    print('5 - To delete a company(by ID).'); //remove na lista
+    print('6 - To leave.');
 
-  Database db = Database();
-
-  db.insertCompany(ambev);
-  db.insertCompany(magalu);
-
-  db.getCompanyByPartnerRegistrationNumber('73923457000141');
-  db.getCompanyByPartnerRegistrationNumber('16391051000121');
+    int options = int.parse(stdin.readLineSync()!);
+    if (options == 0) {
+      print('Finished operation.');
+      break;
+    }
+    switch (options) {
+      case 1:
+        // db.insertCompany();
+        db.createCompany(ambev);
+        db.createCompany(magalu);
+        break;
+      case 2:
+        db.searchCompByRegistNumber();
+        break;
+      case 3:
+        db.searchPartByRegistNumber();
+        break;
+      case 4:
+        db.getCompaniesOrderByCompanyName();
+        break;
+      case 5:
+        db.removeCompanyID();
+        break;
+      default:
+        print('Digito inválido. Informe um número válido.');
+    }
+  } while (options != 0);
 }

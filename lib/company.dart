@@ -1,23 +1,64 @@
 import 'package:cadastro_de_empresas/address.dart';
-import 'package:cadastro_de_empresas/person.dart';
+import 'package:cadastro_de_empresas/partner.dart';
 
 class Company {
-  String uuid;
-  String companyName;
-  String commercialName;
-  String registrationNumber;
-  Address address;
-  String phoneNumber;
-  DateTime createdAt;
-  Person partner;
+  //attributes:
 
+  final String _uuid;
+  String companyName;
+  String tradeName;
+  String registrationNumber;
+  String phone;
+  Address address;
+  Partner partner;
+  DateTime registrationTime;
+
+  //constructor:
   Company(
-      this.uuid,
-      this.companyName,
-      this.commercialName,
-      this.registrationNumber,
-      this.address,
-      this.phoneNumber,
-      this.createdAt,
-      this.partner);
+    this._uuid,
+    this.companyName,
+    this.tradeName,
+    this.registrationNumber,
+    this.phone,
+    this.address,
+    this.partner,
+    this.registrationTime,
+  );
+
+  String showRegistNumberCompany() {
+    if (registrationNumber.length == 14) {
+      return ('${registrationNumber.substring(0, 2)}.${registrationNumber.substring(2, 5)}.${registrationNumber.substring(5, 8)}/${registrationNumber.substring(8, 12)}-${registrationNumber.substring(12, 14)}');
+    } else {
+      return "invalid registration number";
+    }
+  }
+
+  dynamic showphone() {
+    if (phone.length >= 10) {
+      return ('(${phone.substring(0, 2)}) ${phone.substring(
+        2,
+      )}');
+    }
+  }
+
+  get uuid {
+    return _uuid;
+  }
 }
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+// ID, Razão Social, Nome Fantasia, CNPJ, Endereço (Logradouro, Número, Complemento, Bairro, Estado e CEP), Telefone, Horário do Cadastro e Sócio
